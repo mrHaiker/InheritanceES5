@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  (function () {
+    // Создание родителя который будет наследоваться
+    function Cat(name) {
+      this.name = name;
+      this.legs = 4;
+      this.speed = 10;
+    }
+    Cat.prototype.run = function (speed) {
+      this.speed += speed;
+      console.log(`${this.name} пробежал ${this.speed}`, this);
+    };
+    Cat.prototype.say = function (what) {
+      console.log(`${this.name} say: Miyauv, ${what}!`);
+    };
+    let carl = new Cat('Carl');
+    carl.say('hello');
+    //=================================================
+
+
+    // Класс который наследует
+    function Dog(name) {
+      // Присваивание свойств родителя
+      Cat.apply(this, arguments);
+      this.engry = false;
+    }
+
+    // Наследование родетельского класс
+    Dog.prototype.__proto__ = Object.create(Cat.prototype);
+
+    Dog.prototype.sleep = function () {
+      console.log(`${this.name} пошел спать, это на долго`);
+    };
+
+    // Переопределение класса
+    Dog.prototype.run = function () {
+      Cat.prototype.run.apply(this, arguments);
+      console.log('Гав, гав!');
+    };
+
+    let mark = new Dog('Mark');
+    mark.run(4);
+
+  })()
+</script>
+</html>
